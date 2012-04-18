@@ -18,7 +18,7 @@ figure(1);
 		xlim([0 R]);
 		grid on;
 	%-r100は解像度を100dpiにする。文字を大きくするために100dpi
-	print -dpng -r100 chord_pitch.png;
+	print -dpng -r100 result/chord_pitch.png;
 	
 %推力とトルクのグラフ
 figure(2)
@@ -27,7 +27,7 @@ figure(2)
 	xlim([0 R]);
 	legend('Thrust[N]','Torque[Nm]');
 	grid on;
-	print -dpng -r100 thrust.png
+	print -dpng -r100 result/thrust.png
 
 %レイノルズ数のグラフ
 figure(3)
@@ -35,4 +35,4 @@ figure(3)
 	ylabel('Reinolds number');
 	xlim([0 R]);
 	grid on;
-	print -dpng -r100 Re.png
+	print -dpng -r100 result/Re.png

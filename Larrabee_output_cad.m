@@ -4,14 +4,15 @@
 %SolidWorks用にファイルを作る予定。
 
 % 翼型datファイルの読み込み
+% 翼型はairfoil/の中に入れる
 % airfoil[x座標,y座標]:size(airfoil) = 2 many
-fp=fopen('dae51.dat');
+fp=fopen('airfoil/dae51.dat');
 airfoil=fgetl(fp);
 airfoil=(fscanf(fp,'%f',[2,200]))';
 fclose(fp);
 
 %複数翼型に対応予定
-fp = fopen('geminism.dat');
+fp = fopen('airfoil/geminism.dat');
 airfoil_2 = fgetl(fp);
 airfoil_2 = (fscanf(fp,'%f',[2,200]))';
 fclose(fp);

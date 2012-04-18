@@ -6,7 +6,7 @@
 save var_Re.mat Re
 
 % 出力ファイル名
-result_filename = 'result.txt';
+result_filename = 'result/result.txt';
 
 % 低レベルファイル入出力でファイル操作
 fid = fopen(result_filename, 'wt');		%テキストモードで開く
