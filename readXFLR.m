@@ -2,14 +2,15 @@
 Relist = {'0.010' '0.020' '0.030' '0.040' '0.050' '0.100'...
  '0.150' '0.200' '0.250' '0.300' '0.350' '0.400'};
 for i=1:12
-	%mはフィイル数
+	%iはフィイル数
 	
 	%読み取るファイルの名前を定義
+	dir_name = 'airfoil/';
 	foil_name = 'pelafoil';
 	datafile_1 = '_T1_Re';
 	datafile_2 = Relist{i};
 	datafile_3 = '_M0.00_N9.0.txt';
-	dataname = strcat(foil_name,datafile_1,datafile_2,datafile_3);
+	dataname = strcat(dir_name,foil_name,datafile_1,datafile_2,datafile_3);
 	
 	fpr=fopen(dataname);		%ファイルオープン
 	%解析データの部分までbufferで読み取ってスキップさせる
