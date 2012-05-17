@@ -5,12 +5,12 @@ Larrabee_input
 
 %-----XFLR5で解析したデータの読み込み-----
 %データファイルが無い場合はコメントアウト
-% readXFLR
+readXFLR
 
 %-----CL,CD,迎え角の読み込み-----
 %XFLR5の解析ファイルがある場合はLarrabee_airfoil
 %ない場合や全く違う条件の時は_iniを使う。どちらかは必ずコメントアウト
-% Larrabee_airfoil
+%Larrabee_airfoil
 Larrabee_airfoil_ini
 
 %-----計算ルーチン-----
