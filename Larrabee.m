@@ -14,7 +14,7 @@ readXFLR
 Larrabee_airfoil_ini
 
 %-----計算ルーチン
-Larrabee_culc
+Larrabee_calc
 
 %-----出力
 Larrabee_output_fig		%グラフ描写と書き出し
