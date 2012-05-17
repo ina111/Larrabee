@@ -50,7 +50,7 @@ data_matという多次元配列に代入する。
  Larrabee\_airfoil_ini.mではCd（抗力係数）とalpha（迎え角）を自分で決めるが、readXFLR.mで翼型の解析データが読み込めればCdとalphaをCl（揚力係数）とRe（レイノルズ数）の2変数関数と置いて、(Cd = f(Re,Cl), alpha = f(Re,Cl))自分で決めたClの値と前回の計算から持ってきたReからCd、alphaを求める。
 
 #### Larrabee\_airfoil_ini.m
- の範囲がreadXFLRで読み込んだ値を越える場合は外挿ができないためにエラーが出るので、こちらを用いる。自分でCdとalphaの値を指定する。
+ Reの範囲がreadXFLRで読み込んだ値を越える場合は外挿ができないためにエラーが出るので、こちらを用いる。自分でCdとalphaの値を指定する。
 
 #### Larrabee_culc.m
  計算部分
