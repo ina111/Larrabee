@@ -16,13 +16,13 @@ Cllist = linspace(0,1.5,100);
 if ask == 1
 	for i = 1:12
 		% Cd_mat_new(i,:) = interp1(data_mat(:,2,i),data_mat(:,3,i),Cllist);
-		Cd_mat_new(i,:) = interp1(data_mat(:,2,i),data_mat(:,3,i),Cllist,'cubic');		
+		Cd_mat_new(i,:) = interp1(data_mat(:,2,i),data_mat(:,3,i),Cllist,'cubic',0);		
 	end
 	data = interp2(Relist,Cllist,Cd_mat_new',Re,Cl);
 elseif ask == 2
 	for i = 1:12
 		% alpha_mat_new(i,:) = interp1(data_mat(:,2,i),data_mat(:,1,i),Cllist);
-		alpha_mat_new(i,:) = interp1(data_mat(:,2,i),data_mat(:,1,i),Cllist,'cubic');
+		alpha_mat_new(i,:) = interp1(data_mat(:,2,i),data_mat(:,1,i),Cllist,'cubic',0);
 	end
 	data = interp2(Relist,Cllist,alpha_mat_new',Re,Cl);
 end
