@@ -1,19 +1,8 @@
-clear zeta0;
-%-------------------------------
-%	条件入力
-%-------------------------------
-%R,B,r,chord,beta,は引き継ぎ
-rpm = 120;						%回転数[rpm]
-Omega = rpm / 60 * 2 * pi;		%回転数Ω[rad/s]（rpmから求まる）
-V = 7.0;						%機速[m/s]
-rho = 1.184;					%空気密度ρ[kg/m^3]
-nu = 1.540 * 10^(-5);			%動粘性係数ν[m^2/s]
-zeta0(1,:) = linspace(0.2,0.2,length(r));
-
 %-------------------------------
 %	計算部分
 %-------------------------------
 %-----初期計算
+Omega = rpm / 60 * 2 * pi;		%回転数Ω[rad/s]（rpmから求まる）
 xi = r./R;
 lambda = V/Omega/R;
 
@@ -25,8 +14,8 @@ Relist = [10000 20000 30000 40000 50000 100000 	150000 200000 250000 300000 3500
 alpha_list = linspace(0,10,100);
 tic
 for i = 1:12
-	Cl_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,2,i),alpha_list,'nearest',0);
-	Cd_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,3,i),alpha_list,'nearest',0);
+	Cl_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,2,i),alpha_list,'linear',0);
+	Cd_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,3,i),alpha_list,'linear',0);
 %	Cd_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,3,i),alpha_list,'nearest');
 end
 %data = interp2(Relist,alpha_list,Cl_mat',Re,alpha);
