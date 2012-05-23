@@ -1,14 +1,29 @@
 clear zeta0;
+tic
 %-------------------------------
 %	条件入力
 %-------------------------------
 %R,B,r,chord,beta,は引き継ぎ
-rpm = 120;						%回転数[rpm]
+rpm = 150;						%回転数[rpm]
 Omega = rpm / 60 * 2 * pi;		%回転数Ω[rad/s]（rpmから求まる）
 V = 7.0;						%機速[m/s]
 rho = 1.184;					%空気密度ρ[kg/m^3]
 nu = 1.540 * 10^(-5);			%動粘性係数ν[m^2/s]
 zeta0(1,:) = linspace(0.2,0.2,length(r));
+
+%-----翼型性能読み込み(degで計算)
+Cl0 = 0.47;
+Cla = 0.1;
+Mach =0;
+
+Cd0 = 0.0105;
+Cd2 = 0.004;
+ClCd0 = 0.4;
+Reref = 200000;
+Reexp = -0.5;
+%Cl = Cl0 + Cla*alpha /Prandl_Mayer
+%Cd = Cd0 + Cd2*(Cl-ClCd0)^2 * (Re/Reref)^Reexp
+Prandl_Mayer = sqrt(1-Mach^2);
 
 %-------------------------------
 %	計算部分
@@ -20,20 +35,10 @@ lambda = V/Omega/R;
 W = sqrt(V^2 + (xi.*R.*Omega).^2);
 tanphi = (1 + zeta0(1,:)/2) .* lambda./xi;
 
-%-----翼型性能読み込み
-Relist = [10000 20000 30000 40000 50000 100000 	150000 200000 250000 300000 350000 400000];
-alpha_list = linspace(0,10,100);
-tic
-for i = 1:12
-	Cl_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,2,i),alpha_list,'liner',0);
-	Cd_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,3,i),alpha_list,'liner',0);
-%	Cd_mat(i,:) = interp1(data_mat(:,1,i),data_mat(:,3,i),alpha_list,'nearest');
-end
-%data = interp2(Relist,alpha_list,Cl_mat',Re,alpha);
-toc
+
 
 %-----収束計算
-for i = 1:5
+for i = 1:10
 	phi = atan(tanphi);
 	F = 2/pi .* acos( exp(-B/2.*(1-xi) ./ sin(lambda.*atan(1+zeta0(i,:)/2))) );
 	
@@ -41,14 +46,9 @@ for i = 1:5
 	alpha = beta - phi;
 	alpha_deg = alpha *180/pi;
 	
-	%Cl = linspace(0.7,0.7,length(r));
-	%Cd = linspace(0.01,0.01,length(r));
-	tic
-	for j = 1:length(r)
-		Cl(j) = interp2(Relist,alpha_list,Cl_mat',Re(j),alpha_deg(j),'linear',0.1);
-		Cd(j) = interp2(Relist,alpha_list,Cd_mat',Re(j),alpha_deg(j),'linear',0);
-	end
-	toc
+	%ClとCdを出す
+	Cl = Cl0 + Cla*alpha_deg /Prandl_Mayer;
+	Cd = Cd0 + Cd2.*(Cl-ClCd0).^2 .* (Re/Reref).^Reexp;
 	
 	epsilon = Cd ./ Cl;
 	Cy = Cl .* (cos(phi) - epsilon.*sin(phi));
@@ -65,9 +65,11 @@ for i = 1:5
 end
 
 %-----推力・トルク・効率計算
-dTdr = 0.5*rho.*W.^2*B.*chord.*Cy;
-T = trapz(r,dTdr)
-dQdr = 0.5*rho.*W.^2*B.*chord.*Cx.*r;
-Q = trapz(r,dQdr)
+dTdr = 0.5*rho.*W.^2.*chord.*Cy;
+T = B * trapz(r,dTdr)
+dQdr = 0.5*rho.*W.^2.*chord.*Cx.*r;
+Q = B * trapz(r,dQdr)
 Power = Q * Omega
 eta = T*V/Power
+
+toc
