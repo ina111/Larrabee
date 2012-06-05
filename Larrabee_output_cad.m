@@ -44,4 +44,12 @@ for i = 1:1:length(r)
 	end
 end
 
-%以下、csvファイルに出力予定
+%フィイル書き出し----
+%cad_filename = 'CADfile';
+%fid = fopen(cad_filename, 'wt');
+%for i = 1:1:length(airfoil)
+%	fprintf(fid,'%f,%f,%f\n',cross_section(i,1),cross_section(i,2),cross_section(i,3),);
+%end
+%fclose(fid);
+
+
